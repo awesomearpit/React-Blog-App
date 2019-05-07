@@ -12,16 +12,16 @@ export default class UserPostsDetail extends Component {
   }
   componentDidMount() {
     const { postId } = this.props.match.params;
-    console.log("id", postId);
+    // console.log("id", postId);
     this.getPostDetails(postId);
   }
 
   getPostDetails = postId => {
-    console.log("getpostdetails", postId);
+    // console.log("getpostdetails", postId);
     fetch(URL + `/posts/${postId}`)
       .then(response => response.json())
       .then(data => {
-        console.log("data", data);
+        // console.log("data", data);
         this.setState({
           data: data
         });
@@ -30,11 +30,11 @@ export default class UserPostsDetail extends Component {
   };
 
   getComment = postId => {
-    console.log("id", postId);
+    // console.log("id", postId);
     fetch(URL + `/comments?postId=${postId}`)
       .then(response => response.json())
       .then(comment => {
-        console.log("comment", comment);
+        // console.log("comment", comment);
         this.setState({
           comment: comment
         });
@@ -48,8 +48,8 @@ export default class UserPostsDetail extends Component {
     })
       .then(response => response.json())
       .then((result, postId) => {
-        console.log("result", result);
-        console.log("id", postId);
+        // console.log("result", result);
+        // console.log("id", postId);
         window.location.href = `/`;
       })
       .catch(err => console.log(err));

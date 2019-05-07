@@ -15,7 +15,7 @@ export default class UserTable extends React.Component {
     fetch(URL + "/users")
       .then(response => response.json())
       .then(data => {
-        console.log("data", data);
+        // console.log("data", data);
         this.setState({
           data: data
         });

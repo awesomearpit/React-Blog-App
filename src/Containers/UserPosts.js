@@ -13,37 +13,34 @@ export default class UserPosts extends Component {
   }
   componentDidMount() {
     const { userId } = this.props.match.params;
-    console.log("id", userId);
+    // console.log("id", userId);
     this.getPost(userId, this.state.limit, this.state.skip);
   }
 
   getPost = (userId, limit, skip) => {
-    console.log("getpost", userId, limit, skip);
     fetch(URL + `/posts?userId=${userId}&skip=${skip}&limit=${limit}`)
       .then(response => response.json())
       .then(data => {
-        console.log("data", data);
         this.setState({
           data: data
         });
       })
       .catch(err => console.log(err));
   };
-  nextClickHandler = limit => {
-    console.log("limit before", limit);
-    this.setState({
-      limit: limit + 10
-    });
-    console.log("limit after", limit);
-  };
-  prevClickHandler = skip => {
-    console.log("limit before", skip);
+  nextClickHandler = (userId, limit, skip) => {
     this.setState({
       skip: skip + 10
     });
-    console.log("limit after", skip);
+    this.getPost(userId, limit, skip);
+  };
+  prevClickHandler = (userId, limit, skip) => {
+    this.setState({
+      skip: skip - 10
+    });
+    this.getPost(userId, limit, skip);
   };
   render() {
+    const { userId } = this.props.match.params;
     return (
       <>
         <h1 className="text-center">All Posts</h1>
@@ -59,7 +56,9 @@ export default class UserPosts extends Component {
         </div>
         <div className="col-12" style={{ "padding-top": "5px" }}>
           <button
-            onClick={() => this.prevClickHandler(this.state.skip)}
+            onClick={() =>
+              this.prevClickHandler(userId, this.state.limit, this.state.skip)
+            }
             type="button"
             class="btn btn-primary"
           >
@@ -67,7 +66,9 @@ export default class UserPosts extends Component {
           </button>
           &nbsp;&nbsp;
           <button
-            onClick={() => this.nextClickHandler(this.state.limit)}
+            onClick={() =>
+              this.nextClickHandler(userId, this.state.limit, this.state.skip)
+            }
             type="button"
             class="btn btn-primary"
           >
